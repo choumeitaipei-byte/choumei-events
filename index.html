@@ -105,7 +105,7 @@
         }
         .conditional-section { display: none; }
         
-        /* 活動選單卡片樣式 */
+        /* 一般活動選單卡片樣式 */
         .event-item {
             border: 2px solid #e8e8e8;
             border-radius: 12px;
@@ -167,6 +167,60 @@
             font-weight: bold;
             margin-bottom: 6px;
         }
+
+        /* 🏀 籃球展開卡片專用樣式 */
+        .basketball-master-card {
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .basketball-toggle-btn {
+            padding: 18px;
+            background: #ffffff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            transition: background 0.2s;
+        }
+        .basketball-toggle-btn:hover {
+            background: #f8fbfe;
+        }
+        .basketball-sub-container {
+            display: none; /* 預設收合 */
+            padding: 15px;
+            background: #f4f8fa;
+            border-top: 2px dashed #dcdcdc;
+        }
+        .arrow-icon {
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+        .arrow-icon.open {
+            transform: rotate(180deg);
+        }
+        .sub-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+        .sub-card:last-child {
+            margin-bottom: 0;
+        }
+        .sub-card:has(input[type="checkbox"]:checked) {
+            border-color: var(--primary-color);
+            background-color: #ffffff;
+            box-shadow: 0 3px 10px rgba(11,60,93,0.1);
+        }
+
         .btn-submit {
             background: linear-gradient(135deg, var(--primary-color), #051d2e);
             color: white;
@@ -242,7 +296,7 @@
                 <input type="text" id="guestName" name="guestName" class="form-control" placeholder="請填寫您的姓名">
             </div>
             <div class="form-group">
-                <label for="companyAndTitle">公司及職稱</label>
+                <label for="companyAndTitle">Company & Title</label>
                 <input type="text" id="companyAndTitle" name="companyAndTitle" class="form-control" placeholder="例如：XX有限公司 總經理">
             </div>
         </div>
@@ -270,55 +324,54 @@
                 </div>
             </div>
 
-            <!-- 活動 2-A：09/05 籃球賽 - 3對3鬥牛賽 -->
-            <div class="event-item">
+            <!-- 活動 2：09/05 籃球嘉年華 (按開展開子選項) -->
+            <div class="basketball-master-card">
                 <img src="poster_0905.jpg" alt="公益籃球嘉年華海報" class="event-poster" onerror="this.style.display='none'">
-                <div class="event-body">
-                    <label class="event-checkbox-label">
-                        <input type="checkbox" name="events" value="0905_籃球賽_3對3鬥牛賽">
-                        <div class="event-info">
-                            <span class="event-tag">📅 2026/09/05 (六) 08:00 - 13:00</span>
-                            <div class="event-title">09/05 公益籃球嘉年華｜3對3鬥牛賽</div>
-                            <div class="event-desc">
-                                • 地點：中和國中體育館/籃球場 (新北市中和區興南路二段3巷17號)<br>
-                                • 熱血競技，歡迎社友與貴賓組隊挑戰！
-                            </div>
-                        </div>
-                    </label>
+                <div class="basketball-toggle-btn" onclick="toggleBasketballOptions()">
+                    <div>
+                        <span class="event-tag">📅 2026/09/05 (六) 08:00 - 13:00</span>
+                        <div class="event-title" style="margin:0;">2026-27年度 3521地區公益籃球嘉年華</div>
+                        <div style="font-size:12.5px; color:#888; margin-top:4px;">點擊展開選擇參賽項目 (3對3 / 成人趣味 / 親子趣味)</div>
+                    </div>
+                    <div class="arrow-icon" id="bbArrow">▼ 展開</div>
                 </div>
-            </div>
 
-            <!-- 活動 2-B：09/05 籃球賽 - 趣味競賽成人組 -->
-            <div class="event-item">
-                <div class="event-body">
-                    <label class="event-checkbox-label">
-                        <input type="checkbox" name="events" value="0905_籃球賽_趣味競賽成人組">
-                        <div class="event-info">
-                            <span class="event-tag">📅 2026/09/05 (六) 08:00 - 13:00</span>
-                            <div class="event-title">09/05 公益籃球嘉年華｜趣味競賽 (成人組)</div>
-                            <div class="event-desc">
-                                • 地點：中和國中體育館/籃球場 (新北市中和區興南路二段3巷17號)<br>
-                                • 輕鬆好玩、活力運動，適合個人或好友一同參與。
+                <!-- 點開後出現的 3 張子圖卡 -->
+                <div class="basketball-sub-container" id="bbSubContainer">
+                    
+                    <!-- 3對3鬥牛賽 -->
+                    <div class="sub-card">
+                        <label class="event-checkbox-label">
+                            <input type="checkbox" name="events" value="0905_籃球賽_3對3鬥牛賽">
+                            <div class="event-info">
+                                <div class="event-title" style="font-size:15.5px;">🏀 3對3鬥牛賽</div>
+                                <div class="event-desc" style="font-size:12.5px;">熱血競技，歡迎社友與貴賓組隊挑戰！</div>
                             </div>
-                        </div>
-                    </label>
-                </div>
-            </div>
+                        </label>
+                    </div>
 
-            <!-- 活動 2-C：09/05 籃球賽 - 趣味競賽親子組 -->
-            <div class="event-item">
-                <div class="event-body">
-                    <label class="event-checkbox-label">
-                        <input type="checkbox" name="events" value="0905_籃球賽_趣味競賽親子組">
-                        <div class="event-info">
-                            <span class="event-tag">📅 2026/09/05 (六) 08:00 - 13:00</span>
-                            <div class="event-title">09/05 公益籃球嘉年華｜趣味競賽 (親子組)</div>
-                            <div class="event-desc">
-                                • 地點：中和國中體育館/籃球場 (新北市中和區興南路二段3巷17號)<br>
-                                • 促進親子互動、一同運動一同公益，歡迎帶小朋友參加！
+                    <!-- 趣味競賽 (成人組) -->
+                    <div class="sub-card">
+                        <label class="event-checkbox-label">
+                            <input type="checkbox" name="events" value="0905_籃球賽_趣味競賽成人組">
+                            <div class="event-info">
+                                <div class="event-title" style="font-size:15.5px;">🎯 趣味競賽 (成人組)</div>
+                                <div class="event-desc" style="font-size:12.5px;">輕鬆投籃趣味賽，適合個人或好友一同參與。</div>
                             </div>
-                        </div>
-                    </label>
+                        </label>
+                    </div>
+
+                    <!-- 趣味競賽 (親子組) -->
+                    <div class="sub-card">
+                        <label class="event-checkbox-label">
+                            <input type="checkbox" name="events" value="0905_籃球賽_趣味競賽親子組">
+                            <div class="event-info">
+                                <div class="event-title" style="font-size:15.5px;">👨‍👩‍👧 趣味競賽 (親子組)</div>
+                                <div class="event-desc" style="font-size:12.5px;">促進親子互動，歡迎攜帶小朋友一同運動做公益！</div>
+                            </div>
+                        </label>
+                    </div>
+
                 </div>
             </div>
 
@@ -391,6 +444,22 @@
             eventsSection.style.display = 'block';
             guestInputs.forEach(input => input.required = true);
             rotaryInputs.forEach(input => { input.required = false; input.value = ''; });
+        }
+    }
+
+    // 🏀 點擊展開/收合籃球選項
+    function toggleBasketballOptions() {
+        const subContainer = document.getElementById('bbSubContainer');
+        const arrow = document.getElementById('bbArrow');
+        
+        if (subContainer.style.display === 'block') {
+            subContainer.style.display = 'none';
+            arrow.innerHTML = '▼ 展開';
+            arrow.classList.remove('open');
+        } else {
+            subContainer.style.display = 'block';
+            arrow.innerHTML = '▲ 收合';
+            arrow.classList.add('open');
         }
     }
 
