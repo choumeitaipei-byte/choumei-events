@@ -220,6 +220,25 @@
             box-shadow: 0 3px 10px rgba(11,60,93,0.1);
         }
 
+        /* 🔗 外部連結按鈕樣式 */
+        .btn-link {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 6px 12px;
+            background-color: #f4f8fa;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .btn-link:hover {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
         .btn-submit {
             background: linear-gradient(135deg, var(--primary-color), #051d2e);
             color: white;
@@ -368,9 +387,8 @@
                 </div>
             </div>
 
-            <!-- 活動 3：10/31 親山健行公益活動 -->
+            <!-- 活動 3：10/31 親山健行公益活動 (附詳細介紹網站按鈕) -->
             <div class="event-item">
-                <img src="poster_1031.png?v=2" alt="親山健行公益活動海報" class="event-poster" onerror="this.style.display='none'">
                 <div class="event-body">
                     <label class="event-checkbox-label">
                         <input type="checkbox" name="events" value="1031_親山健行公益活動">
@@ -380,7 +398,8 @@
                             <div class="event-desc">
                                 • 集合地點：大湖公園-陽光草皮 (捷運大湖公園站2號出口)<br>
                                 • 報名費用：600元/人 (含登山包1個、摸彩券1張)<br>
-                                • 一同運動、一同公益健行
+                                • 一同運動、一同公益健行<br>
+                                <a href="https://pub-a98338ea8c9e4eddac235488a9fac399.r2.dev/rotary-26-27/hiking-page-03/index.html" target="_blank" class="btn-link" onclick="event.stopPropagation();">🌐 點此查看「親山健行」完整介紹網站 ➔</a>
                             </div>
                         </div>
                     </label>
