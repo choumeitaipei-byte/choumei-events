@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>洲美扶輪社 - 近期例會與活動多重報名系統</title>
+    <title>洲美扶輪社 - 近期例會與公益活動多重報名系統</title>
     <style>
         :root {
             --primary-color: #0b3c5d; /* 皇家扶輪藍 */
@@ -122,8 +122,7 @@
         }
         .event-poster {
             width: 100%;
-            max-height: 250px;
-            object-fit: cover;
+            height: auto;
             display: block;
             border-bottom: 1px solid #eee;
         }
@@ -154,7 +153,7 @@
         }
         .event-desc {
             font-size: 13.5px;
-            color: #666;
+            color: #555;
             margin: 6px 0;
             line-height: 1.5;
         }
@@ -189,12 +188,12 @@
     
     <div class="header-card">
         <h1>洲美扶輪社 - 近期例會與活動報名</h1>
-        <p>歡迎預約參與！填寫一次資料即可勾選多個活動行程。</p>
+        <p>歡迎預約參與！填寫一次個人資料即可勾選多個行程。</p>
     </div>
 
     <form id="multiRegistrationForm" action="https://script.google.com/macros/s/AKfycbwjuwUQ-bX3O7eW4sOcgIwZBGvT7ls2wuCivgnFrTZNM4MJQKmUCo-WRosvFqJNm4Eh/exec" method="GET" target="hidden_iframe" onsubmit="showSuccessAlert(event)">
         
-        <!-- 第一部分：身分驗證 -->
+        <!-- 第一部分：身分選擇 -->
         <div class="form-card">
             <h2 class="section-title">第一步：個人基本資料</h2>
             <div class="form-group">
@@ -248,65 +247,62 @@
             </div>
         </div>
 
-        <!-- 第二部分：選擇欲報名的活動 (可複選) -->
+        <!-- 第二部分：勾選欲報名的活動 (可複選) -->
         <div id="eventsSection" class="form-card conditional-section">
             <h2 class="section-title">第二步：勾選欲參加之活動 (可複選)</h2>
 
-            <!-- 活動 1 -->
+            <!-- 活動 1：08/19 第六分區聯合例會 -->
             <div class="event-item">
-                <img src="poster_0804.jpg" alt="NO.636次例會海報" class="event-poster" onerror="this.style.display='none'">
+                <img src="poster_0819.jpg" alt="第六分區聯合例會海報" class="event-poster" onerror="this.style.display='none'">
                 <div class="event-body">
                     <label class="event-checkbox-label">
-                        <input type="checkbox" name="events" value="0804_城市再生">
+                        <input type="checkbox" name="events" value="0819_第六分區聯合例會">
                         <div class="event-info">
-                            <span class="event-tag">📅 2026/08/04 (二) 18:30</span>
-                            <div class="event-title">NO.636次例會｜城市再生・永續未來</div>
-                            <div class="event-desc">都更 ✕ 建築 ✕ 生態 (講師：李恬儀 Olivia、張雅婷 Bell)</div>
+                            <span class="event-tag">📅 2026/08/19 (三) 18:00</span>
+                            <div class="event-title">第637次例會｜第六分區聯合例會暨總監公式訪問</div>
+                            <div class="event-desc">
+                                • 主講人：林碧堂 DG Boger<br>
+                                • 地點：茹曦酒店5樓斯賓諾莎廳 (台北市松山區敦化北路100號)<br>
+                                • 來賓餐費：1,100元/位 (18:00註冊聯誼 | 19:30正式開始)
+                            </div>
                         </div>
                     </label>
                 </div>
             </div>
 
-            <!-- 活動 2 -->
+            <!-- 活動 2：09/05 公益籃球嘉年華 -->
             <div class="event-item">
-                <img src="poster_0818.jpg" alt="NO.637次例會海報" class="event-poster" onerror="this.style.display='none'">
+                <img src="poster_0905.jpg" alt="公益籃球嘉年華海報" class="event-poster" onerror="this.style.display='none'">
                 <div class="event-body">
                     <label class="event-checkbox-label">
-                        <input type="checkbox" name="events" value="0818_專題演講">
+                        <input type="checkbox" name="events" value="0905_公益籃球嘉年華">
                         <div class="event-info">
-                            <span class="event-tag">📅 2026/08/18 (二) 18:30</span>
-                            <div class="event-title">NO.637次例會｜八月中旬專題講座</div>
-                            <div class="event-desc">詳細演講主題與主講人精彩預告內容。</div>
+                            <span class="event-tag">📅 2026/09/05 (六) 08:00 - 13:00</span>
+                            <div class="event-title">2026-27年度 3521地區公益籃球嘉年華</div>
+                            <div class="event-desc">
+                                • 內容：3對3鬥牛賽、趣味競賽(成人組/親子組)、美食與遊戲攤位<br>
+                                • 地點：中和國中體育館/籃球場 (新北市中和區興南路二段3巷17號)<br>
+                                • 社員/來賓聯誼運動公益活動 (免費/項目請於備註說明)
+                            </div>
                         </div>
                     </label>
                 </div>
             </div>
 
-            <!-- 活動 3 -->
+            <!-- 活動 3：10/31 親山健行公益活動 -->
             <div class="event-item">
-                <img src="poster_0901.jpg" alt="NO.638次例會海報" class="event-poster" onerror="this.style.display='none'">
+                <img src="poster_1031.jpg" alt="親山健行公益活動海報" class="event-poster" onerror="this.style.display='none'">
                 <div class="event-body">
                     <label class="event-checkbox-label">
-                        <input type="checkbox" name="events" value="0901_九月例會">
+                        <input type="checkbox" name="events" value="1031_親山健行公益活動">
                         <div class="event-info">
-                            <span class="event-tag">📅 2026/09/01 (二) 18:30</span>
-                            <div class="event-title">NO.638次例會｜九月主題例會</div>
-                            <div class="event-desc">歡迎各界貴賓預約蒞臨用餐交流。</div>
-                        </div>
-                    </label>
-                </div>
-            </div>
-
-            <!-- 活動 4 -->
-            <div class="event-item">
-                <img src="poster_0915.jpg" alt="NO.639次例會海報" class="event-poster" onerror="this.style.display='none'">
-                <div class="event-body">
-                    <label class="event-checkbox-label">
-                        <input type="checkbox" name="events" value="0915_聯合例會">
-                        <div class="event-info">
-                            <span class="event-tag">📅 2026/09/15 (二) 18:30</span>
-                            <div class="event-title">NO.639次例會｜秋季聯合交流例會</div>
-                            <div class="event-desc">跨社交流與專題分享特別企劃。</div>
+                            <span class="event-tag">📅 2026/10/31 (六) 08:00 - 12:00</span>
+                            <div class="event-title">3521地區 親山健行公益活動</div>
+                            <div class="event-desc">
+                                • 集合地點：大湖公園-陽光草皮 (捷運大湖公園站2號出口)<br>
+                                • 報名費用：600元/人 (含登山包1個、摸彩券1張)<br>
+                                • 一同運動、一同公益健行
+                            </div>
                         </div>
                     </label>
                 </div>
@@ -329,7 +325,7 @@
 
             <div class="form-group">
                 <label for="note">備註說明 (選填)</label>
-                <textarea id="note" name="note" class="form-control" rows="2" placeholder="如有其他特殊需求請在此註記"></textarea>
+                <textarea id="note" name="note" class="form-control" rows="3" placeholder="若有報名籃球賽(3對3/趣味競賽組別)或特殊需求，請在此備註說明。"></textarea>
             </div>
 
             <button type="submit" class="btn-submit">確認送出報名</button>
@@ -374,7 +370,7 @@
         }
 
         setTimeout(function() {
-            alert('🎉 報名成功！已收到您的多項活動預約，期待您的蒞臨。');
+            alert('🎉 報名成功！已收到您的活動預約，期待您的蒞臨。');
             document.getElementById('multiRegistrationForm').reset();
             document.getElementById('rotarianSection').style.display = 'none';
             document.getElementById('guestSection').style.display = 'none';
