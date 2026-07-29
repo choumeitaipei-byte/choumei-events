@@ -105,7 +105,6 @@
         }
         .conditional-section { display: none; }
         
-        /* 一般活動選單卡片樣式 */
         .event-item {
             border: 2px solid #e8e8e8;
             border-radius: 12px;
@@ -190,7 +189,7 @@
             background: #f8fbfe;
         }
         .basketball-sub-container {
-            display: none; /* 預設收合 */
+            display: none;
             padding: 15px;
             background: #f4f8fa;
             border-top: 2px dashed #dcdcdc;
@@ -296,7 +295,7 @@
                 <input type="text" id="guestName" name="guestName" class="form-control" placeholder="請填寫您的姓名">
             </div>
             <div class="form-group">
-                <label for="companyAndTitle">Company & Title</label>
+                <label for="companyAndTitle">公司及職稱</label>
                 <input type="text" id="companyAndTitle" name="companyAndTitle" class="form-control" placeholder="例如：XX有限公司 總經理">
             </div>
         </div>
@@ -307,7 +306,7 @@
 
             <!-- 活動 1：08/19 第六分區聯合例會 -->
             <div class="event-item">
-                <img src="poster_0819.jpg" alt="第六分區聯合例會海報" class="event-poster" onerror="this.style.display='none'">
+                <img src="poster_0819.png?v=2" alt="第六分區聯合例會海報" class="event-poster" onerror="this.style.display='none'">
                 <div class="event-body">
                     <label class="event-checkbox-label">
                         <input type="checkbox" name="events" value="0819_第六分區聯合例會">
@@ -324,9 +323,9 @@
                 </div>
             </div>
 
-            <!-- 活動 2：09/05 籃球嘉年華 (按開展開子選項) -->
+            <!-- 活動 2：09/05 籃球嘉年華 -->
             <div class="basketball-master-card">
-                <img src="poster_0905.jpg" alt="公益籃球嘉年華海報" class="event-poster" onerror="this.style.display='none'">
+                <img src="poster_0905.png?v=2" alt="公益籃球嘉年華海報" class="event-poster" onerror="this.style.display='none'">
                 <div class="basketball-toggle-btn" onclick="toggleBasketballOptions()">
                     <div>
                         <span class="event-tag">📅 2026/09/05 (六) 08:00 - 13:00</span>
@@ -336,10 +335,7 @@
                     <div class="arrow-icon" id="bbArrow">▼ 展開</div>
                 </div>
 
-                <!-- 點開後出現的 3 張子圖卡 -->
                 <div class="basketball-sub-container" id="bbSubContainer">
-                    
-                    <!-- 3對3鬥牛賽 -->
                     <div class="sub-card">
                         <label class="event-checkbox-label">
                             <input type="checkbox" name="events" value="0905_籃球賽_3對3鬥牛賽">
@@ -350,7 +346,6 @@
                         </label>
                     </div>
 
-                    <!-- 趣味競賽 (成人組) -->
                     <div class="sub-card">
                         <label class="event-checkbox-label">
                             <input type="checkbox" name="events" value="0905_籃球賽_趣味競賽成人組">
@@ -361,7 +356,6 @@
                         </label>
                     </div>
 
-                    <!-- 趣味競賽 (親子組) -->
                     <div class="sub-card">
                         <label class="event-checkbox-label">
                             <input type="checkbox" name="events" value="0905_籃球賽_趣味競賽親子組">
@@ -371,13 +365,12 @@
                             </div>
                         </label>
                     </div>
-
                 </div>
             </div>
 
             <!-- 活動 3：10/31 親山健行公益活動 -->
             <div class="event-item">
-                <img src="poster_1031.jpg" alt="親山健行公益活動海報" class="event-poster" onerror="this.style.display='none'">
+                <img src="poster_1031.png?v=2" alt="親山健行公益活動海報" class="event-poster" onerror="this.style.display='none'">
                 <div class="event-body">
                     <label class="event-checkbox-label">
                         <input type="checkbox" name="events" value="1031_親山健行公益活動">
@@ -447,7 +440,6 @@
         }
     }
 
-    // 🏀 點擊展開/收合籃球選項
     function toggleBasketballOptions() {
         const subContainer = document.getElementById('bbSubContainer');
         const arrow = document.getElementById('bbArrow');
