@@ -48,6 +48,11 @@
   .opts input{width:22px;height:22px}
   .fee{margin-top:12px;font-size:1.15rem;font-weight:800;color:var(--navy)}
   .closed{opacity:.55}
+  .badge{display:inline-block;background:#D93025;color:#fff;font-size:.85rem;font-weight:700;border-radius:6px;padding:1px 8px;margin-left:8px;vertical-align:middle}
+  .req-note{color:#B3261E;font-weight:700;margin:0 0 10px}
+  .ev.need{border:3px solid #D93025;box-shadow:0 0 0 4px rgba(217,48,37,.15)}
+  .need-msg{display:none;color:#B3261E;font-weight:800;margin-top:10px}
+  .ev.need .need-msg{display:block}
   .closed-note{font-weight:700;color:var(--no)}
 
   .list{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
@@ -87,9 +92,9 @@
 
     <div id="memberFields">
       <label class="field" for="nickname">Nickname（英文名）</label>
-      <input type="text" id="nickname" placeholder="例：Maya" autocomplete="nickname">
+      <input type="text" id="nickname" placeholder="例：Jerry" autocomplete="nickname">
       <label class="field" for="name">中文姓名</label>
-      <input type="text" id="name" placeholder="例：許采葳" autocomplete="name">
+      <input type="text" id="name" placeholder="例：張坤鴻" autocomplete="name">
     </div>
 
     <div id="guestFields" class="hide">
@@ -124,11 +129,11 @@ const EVENTS = [
   { code:'C', date:'2026-12-08', tag:'【C】12/8（二）', title:'第649次例會－第十四屆社員大會',
     info:[['時間','18:30–20:30'],['地點','台北市商業會'],
           ['說明','本次需要 2/3 社員出席（約40人），請各位社友務必預留時間出席<br>眷屬社友也可以投票']],
-    yes:'我要出席', no:'請假', extras:['spouse'] },
+    yes:'我要出席', no:'請假', extras:['spouse'], required:true },
   { code:'D', date:'2026-12-19', tag:'【D】12/19（六）', title:'洲美社 歡慶聖誕晚會',
     info:[['時間','18:00–21:00'],['地點','丸滿台灣味手路菜餐廳'],['費用','社友／寶眷／小扶輪 580元<br>來賓 1,180元'],
           ['說明','社友不須另行準備禮物，當天有摸彩、小禮物及點心']],
-    yes:'我要參加', no:'不克參加', extras:['family','guest','diet','fee'] },
+    yes:'我要參加', no:'不克參加', extras:['family','guest','diet','fee'], required:true },
   { code:'E', date:'2027-01-10', tag:'【E】2027/1/10（日）', title:'地區 2026-27年度保齡球聯誼賽',
     info:[['時間','上午 08:30 報到'],['地點','新喬福保齡球館<br>新北市中和區錦和路388號（TEL 2246-9988）'],['費用','每人 800元']],
     yes:'我要參加', no:'不克參加', extras:['fee'] },
@@ -142,6 +147,7 @@ const GROUP_FEES = { '團體組':4200, '雙人組':1200, '趣味競賽組':600 }
 
 /* ======== 狀態 ======== */
 let identity = '社友';
+let lastLists = null;   // 目前名單（用來判斷誰已經回覆過）
 const choice = {};   // code -> '參加' | '不克參加'
 const $ = (s, el=document) => el.querySelector(s);
 
@@ -214,16 +220,18 @@ function renderEvents(){
     return `
     <div class="card ev ${closed?'closed':''}" id="ev_${ev.code}">
       <div class="ev-head">
-        <div class="ev-tag">${ev.tag}</div>
+        <div class="ev-tag">${ev.tag}${ev.required && !closed ? '<span class="badge">必填</span>' : ''}</div>
         <div class="ev-title">${ev.title}</div>
       </div>
       <div class="ev-body">
+        ${ev.required && !closed ? '<p class="req-note">為統計人數，社友請務必回覆是否出席</p>' : ''}
         <dl class="info">${ev.info.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
         ${closed ? '<div class="closed-note">活動已結束</div>' : `
         <div class="choice">
           <button type="button" class="yes" data-code="${ev.code}" data-v="參加">${ev.yes}</button>
           <button type="button" class="no" data-code="${ev.code}" data-v="不克參加">${ev.no}</button>
         </div>
+        <div class="need-msg">↑ 請選擇是否出席</div>
         <div class="extra hide" id="extra_${ev.code}">${extraHTML(ev)}</div>`}
         <div class="list" id="list_${ev.code}"><span class="empty">名單載入中…</span></div>
       </div>
@@ -234,6 +242,7 @@ function renderEvents(){
     const c = b.dataset.code, v = b.dataset.v;
     choice[c] = choice[c] === v ? undefined : v;      // 再按一次取消
     const card = $('#ev_'+c);
+    card.classList.remove('need');
     card.querySelectorAll('.choice button').forEach(x => x.classList.toggle('on', x.dataset.v === choice[c]));
     const ex = $('#extra_'+c);
     if(ex) ex.classList.toggle('hide', !(choice[c] === '參加' && ex.innerHTML.trim()));
@@ -264,6 +273,7 @@ function updateFee(c){
 
 /* ======== 名單 ======== */
 function renderLists(lists){
+  if(lists) lastLists = lists;
   EVENTS.forEach(ev => {
     const el = $('#list_'+ev.code);
     const L = (lists && lists[ev.code]) || {going:[], leave:[], people:0};
@@ -295,6 +305,11 @@ function loadLists(){
 }
 
 /* ======== 送出 ======== */
+// 跟後台相同的辨識方式：社友以 Nickname 為主，沒有才用姓名
+function personKey(nickname, name){
+  const nick = String(nickname || '').trim().toLowerCase();
+  return nick ? 'm:' + nick : 'm:' + String(name || '').trim().toLowerCase();
+}
 function apiReady(){ return API_URL && !API_URL.startsWith('PASTE'); }
 
 function showMsg(type, html){
@@ -349,6 +364,16 @@ function collect(){
       e.option = opt.filter(Boolean).join('，');
     }
     p.events.push(e);
+  }
+  if(identity === '社友'){
+    const key = personKey(p.nickname, p.name);
+    const missing = EVENTS.filter(ev => ev.required && !isClosed(ev) && !choice[ev.code] &&
+      !(lastLists && lastLists[ev.code] && (lastLists[ev.code].keys || []).includes(key)));
+    if(missing.length){
+      missing.forEach(ev => $('#ev_'+ev.code).classList.add('need'));
+      setTimeout(() => $('#ev_'+missing[0].code).scrollIntoView({behavior:'smooth', block:'start'}), 400);
+      return '為統計人數，請先回覆是否出席：' + missing.map(ev => ev.tag + ev.title).join('、');
+    }
   }
   if(!p.events.length) return '請至少在一個活動按「參加」或「不克參加」';
   return p;
